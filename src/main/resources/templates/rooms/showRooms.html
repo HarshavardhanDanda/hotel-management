@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>Rooms List</title>
+</head>
+<body>
+<div class="container">
+    <hr>
+    <h3>Rooms List</h3>
+<hr>
+<a th:href="@{rooms/showFormForAdd}" class="btn btn-primary btn-sm mb-3"> Add Room </a>
+<hr>
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+       <th>Room No </th>
+       <th> Floor No </th>
+    </thead>
+    <tbody>
+       <tr th:each="theRoom: ${rooms}">
+           <td th:text="${theRoom.roomId}"/>
+           <td th:text="${theRoom.floorNo}"/>
+
+       </tr>
+    </tbody>
+</table>
+
+</div>
+</body>
+</html>
