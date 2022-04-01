@@ -33,7 +33,7 @@ public class RoomController {
     public String showFormForAdd(Model theModel){
         Room theRoom= new Room();
         theModel.addAttribute("room",theRoom);
-        return "/rooms/room-form";
+        return "rooms/room-form";
     }
 
 

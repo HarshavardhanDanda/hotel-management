@@ -30,10 +30,10 @@ public class HotelController {
         return "hotels/showHotels";
     }
 
-    @GetMapping("showFormForAdd")
+    @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model theModel){
         Hotel theHotel= new Hotel();
         theModel.addAttribute("hotel",theHotel);
-        return "/hotels/hotel-form";
+        return "hotels/hotel-form";
     }
 }
