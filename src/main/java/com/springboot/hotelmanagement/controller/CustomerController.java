@@ -1,6 +1,7 @@
 package com.springboot.hotelmanagement.controller;
 
 import com.springboot.hotelmanagement.enitity.Customer;
+import com.springboot.hotelmanagement.enitity.Hotel;
 import com.springboot.hotelmanagement.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,7 @@ public class CustomerController {
         customerService=theCustomerService;
     }
 
-    @GetMapping("/showAll")
+    @GetMapping("/showAll")//not needed
     public String findAll(Model theModel){
         List<Customer> Customers= customerService.findAll();
 
@@ -50,9 +51,16 @@ public class CustomerController {
     }
 
     @GetMapping("/deleteById")
-    public String delteCustomer(@RequestParam("customerId") int theId){
-        customerService.deleteById(theId);
-        return "redirect:/customers/showAll";
+    public String deleteCustomer(@RequestParam("customerId") int customerId){
+        customerService.deleteById(customerId);
+        return "redirect:/hotels/showAll";
+    }
+
+    @GetMapping("/findCustomers")
+    public String findCustomers(@RequestParam("hotelId") int theId, Model theModel){
+        List<Customer> customers= customerService.findCustomers(theId);
+        theModel.addAttribute("hotelCustomers",customers);
+        return "customers/showCustomers";
     }
 
 

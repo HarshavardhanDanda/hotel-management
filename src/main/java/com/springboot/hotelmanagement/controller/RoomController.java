@@ -54,4 +54,11 @@ public class RoomController {
         return "redirect:/rooms/showAll";
     }
 
+    @GetMapping("/findRooms")
+    public String findRooms(@RequestParam("hotelId") int theId, Model theModel){
+        List<Room> Rooms=roomService.findRooms(theId);
+        theModel.addAttribute("hotelRooms",Rooms);
+        return "rooms/showRooms";
+    }
+
 }

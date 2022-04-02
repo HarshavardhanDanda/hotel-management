@@ -26,7 +26,7 @@
             <th style="text-align:center">Action</th>
         </thead>
         <tbody style="background-color: pink">
-             <tr th:each="theCustomer : ${customers}">
+             <tr th:each="theCustomer : ${hotelCustomers}">
                  <td th:text="${theCustomer.firstName}"/>
                  <td th:text="${theCustomer.lastName}"/>
                  <td th:text="${theCustomer.email}"/>

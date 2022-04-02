@@ -50,4 +50,10 @@ public class CustomerServiceImpl implements CustomerService{
     public void deleteById(int theId) {
         customerRepository.deleteById(theId);
     }
+
+    @Override
+    @Transactional
+    public List<Customer> findCustomers(int theId) {
+        return customerRepository.findCustomers(theId);
+    }
 }

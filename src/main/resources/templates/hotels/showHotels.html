@@ -30,8 +30,8 @@
                 <td th:text="${theHotel.hotelName}"/>
                 <td th:text="${theHotel.hotelAddress}"/>
                 <td th:text="${theHotel.hotelRating}"/>
-                <td style="text-align:center"><a th:href="@{/rooms/showAll}" class="btn btn-info btn-sm">View Rooms</a>&nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/customers/showAll}" class="btn btn-info btn-sm">View Customers</a>
+                <td style="text-align:center"><a th:href="@{/rooms/findRooms(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm">View Rooms</a>&nbsp;&nbsp;&nbsp;
+                    <a th:href="@{/customers/findCustomers(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm">View Customers</a>
                 </td>
                 <td style="text-align:center"> <a th:href="@{/hotels/showFormForUpdate(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm"> Update</a>&nbsp;
                    <a th:href="@{/hotels/deleteById(hotelId=${theHotel.hotelId})}" class="btn btn-danger btn-sm"

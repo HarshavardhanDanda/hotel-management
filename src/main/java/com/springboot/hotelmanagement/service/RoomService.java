@@ -13,4 +13,6 @@ public interface RoomService {
     public void save(Room theRoom);
 
     public void deleteById(int theId);
+
+    List<Room> findRooms(int theId);
 }

@@ -49,4 +49,10 @@ public class RoomServiceImpl implements RoomService{
     public void deleteById(int theId) {
         roomRepository.deleteById(theId);
     }
+
+    @Override
+    @Transactional
+    public List<Room> findRooms(int theId) {
+        return roomRepository.findRooms(theId);
+    }
 }
