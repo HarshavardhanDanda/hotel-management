@@ -10,12 +10,15 @@
 
     <title>Add Hotel</title>
 </head>
-<body>
+<body style="background-color: #e3e0cf">
 <div class="container">
 <hr>
 <h3>Add Hotel</h3>
 <hr>
     <form action="#" th:action="@{/hotels/save}" th:object="${hotel}" method="POST">
+
+        <!--This field is very important for updating in tables-->
+        <input type="hidden" th:field="*{hotelId}"/>
 
         <input type="text" th:field="*{hotelName}" class="form-control mb-4 col-4"  placeholder="Hotel Name"/>
         <input type="text" th:field="*{hotelAddress}" class="form-control mb-4 col-4" placeholder="Hotel Address"/>
@@ -26,7 +29,7 @@
     </form>
 
     <hr>
-    <a href="@{hotels/showAll}">Back to Home Page</a>
+    <a th:href="@{/hotels/showAll}" class="btn btn-danger btn-sm">Back to Hotels</a>
 
 </div>
 </body>

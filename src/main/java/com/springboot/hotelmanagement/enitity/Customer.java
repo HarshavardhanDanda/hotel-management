@@ -20,7 +20,7 @@ public class Customer {
     @Column(name="email")
     private String email;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.REMOVE})
+    @ManyToOne//(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.REMOVE})
     @JoinColumn(name="hotel_hotel_id")
     private Hotel hotel;
 

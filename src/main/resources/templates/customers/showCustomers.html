@@ -10,7 +10,7 @@
 
     <title>Customer List</title>
 </head>
-<body>
+<body style="background-color: #e3e0cf">
 <div class="container">
     <hr>
     <h3> Customer List</h3>
@@ -23,27 +23,23 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
-            <th>Action</th>
+            <th style="text-align:center">Action</th>
         </thead>
-        <tbody>
+        <tbody style="background-color: pink">
              <tr th:each="theCustomer : ${customers}">
                  <td th:text="${theCustomer.firstName}"/>
                  <td th:text="${theCustomer.lastName}"/>
                  <td th:text="${theCustomer.email}"/>
+                 <td style="text-align:center"><a th:href="@{/customers/showFormForUpdate(customerId=${theCustomer.customerId})}" class="btn btn-info btn-sm"> Update</a>&nbsp;
+                 <a th:href="@{/customers/deleteById(customerId=${theCustomer.customerId})}" class="btn btn-danger btn-sm"
+                 onclick="if(!(confirm('Are you sure you wanna delete the customer?'))) return false">Delete</a>
+                 </td>
              </tr>
         </tbody>
     </table>
-
-
-
-
-
-
+    <hr>
+    <a th:href="@{/hotels/showAll}" class="btn btn-danger btn-sm">Go Back to Hotels</a>
 </div>
-
-
-
-
 
 </body>
 </html>

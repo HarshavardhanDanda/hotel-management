@@ -19,7 +19,7 @@ public class Hotel {
     private String hotelAddress;
 
     @Column(name="hotel_rating")
-    private String hotelRating;
+    private Double hotelRating;
 
     @OneToMany(mappedBy="hotel",cascade=CascadeType.ALL)
     private List<Room> rooms;
@@ -29,7 +29,7 @@ public class Hotel {
 
     public Hotel(){}
 
-    public Hotel(String hotelName, String hotelAddress, String hotelRating) {
+    public Hotel(String hotelName, String hotelAddress, Double hotelRating) {
         this.hotelName = hotelName;
         this.hotelAddress = hotelAddress;
         this.hotelRating = hotelRating;
@@ -59,11 +59,11 @@ public class Hotel {
         this.hotelAddress = hotelAddress;
     }
 
-    public String getHotelRating() {
+    public Double getHotelRating() {
         return hotelRating;
     }
 
-    public void setHotelRating(String rating) {
+    public void setHotelRating(Double hotelRating) {
         this.hotelRating = hotelRating;
     }
 

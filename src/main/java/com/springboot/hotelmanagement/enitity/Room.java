@@ -9,34 +9,34 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="room_id")
-    private int roomId;
+    private Integer roomId;
 
     @Column(name="floor_no")
-    private int floorNo;
+    private Integer floorNo;
 
-    @ManyToOne(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.REMOVE})
+    @ManyToOne//(cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,CascadeType.REMOVE})
     @JoinColumn(name="hotel_hotel_id")
     private Hotel hotel;
 
     public Room(){}
 
-    public Room(int floorNo) {
+    public Room(Integer floorNo) {
         this.floorNo = floorNo;
     }
 
-    public int getRoomId() {
+    public Integer getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(int roomId) {
+    public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
 
-    public int getFloorNo() {
+    public Integer getFloorNo() {
         return floorNo;
     }
 
-    public void setFloorNo(int floorNo) {
+    public void setFloorNo(Integer floorNo) {
         this.floorNo = floorNo;
     }
 

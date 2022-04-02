@@ -5,8 +5,7 @@ import com.springboot.hotelmanagement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
@@ -36,5 +35,23 @@ public class RoomController {
         return "rooms/room-form";
     }
 
+    @PostMapping("/save")
+    public String saveRoom(@ModelAttribute("room") Room theRoom){
+        roomService.save(theRoom);
+        return "redirect:/rooms/showAll";
+    }
+
+    @GetMapping("/showFormForUpdate")
+    public String updateRoom(@RequestParam("roomId") int theId, Model theModel){
+        Room theRoom = roomService.findById(theId);
+        theModel.addAttribute(theRoom);
+        return "rooms/room-form";
+    }
+
+    @GetMapping("/deleteById")
+    public String deleteRoom(@RequestParam("roomId") int theId){
+        roomService.deleteById(theId);
+        return "redirect:/rooms/showAll";
+    }
 
 }
