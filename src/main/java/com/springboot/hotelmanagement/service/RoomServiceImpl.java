@@ -1,7 +1,11 @@
 package com.springboot.hotelmanagement.service;
 
+
+import com.springboot.hotelmanagement.dto.RoomDto;
+
 import com.springboot.hotelmanagement.enitity.Room;
 import com.springboot.hotelmanagement.repository.RoomRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,12 +16,11 @@ import java.util.Optional;
 @Repository
 public class RoomServiceImpl implements RoomService{
 
+    @Autowired
     private RoomRepository roomRepository;
 
     @Autowired
-    public RoomServiceImpl(RoomRepository theRoomRepository){
-        roomRepository=theRoomRepository;
-    }
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional
@@ -54,5 +57,11 @@ public class RoomServiceImpl implements RoomService{
     @Transactional
     public List<Room> findRooms(int theId) {
         return roomRepository.findRooms(theId);
+    }
+
+    private RoomDto convertEntityToDto(Room room){
+        RoomDto roomDto=new RoomDto();
+        roomDto=modelMapper.map(room, RoomDto.class);
+        return roomDto;
     }
 }

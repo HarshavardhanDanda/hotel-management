@@ -1,7 +1,11 @@
 package com.springboot.hotelmanagement.service;
 
+import com.springboot.hotelmanagement.dto.CustomerDto;
+import com.springboot.hotelmanagement.dto.HotelDto;
+import com.springboot.hotelmanagement.enitity.Customer;
 import com.springboot.hotelmanagement.enitity.Hotel;
 import com.springboot.hotelmanagement.repository.HotelRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,13 +16,11 @@ import java.util.Optional;
 @Repository
 public class HotelServiceImpl implements HotelService{
 
+    @Autowired
     private HotelRepository hotelRepository;
 
     @Autowired
-    public HotelServiceImpl(HotelRepository theHotelRepository){
-        hotelRepository=theHotelRepository;
-    }
-
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional
@@ -50,5 +52,11 @@ public class HotelServiceImpl implements HotelService{
     @Transactional
     public void deleteById(int theId) {
         hotelRepository.deleteById(theId);
+    }
+
+    private HotelDto convertEntityToDto(Hotel hotel){
+        HotelDto hotelDto=new HotelDto();
+        hotelDto=modelMapper.map(hotel, HotelDto.class);
+        return hotelDto;
     }
 }

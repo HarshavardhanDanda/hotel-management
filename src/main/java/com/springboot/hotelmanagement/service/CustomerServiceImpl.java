@@ -1,7 +1,9 @@
 package com.springboot.hotelmanagement.service;
 
+import com.springboot.hotelmanagement.dto.CustomerDto;
 import com.springboot.hotelmanagement.enitity.Customer;
 import com.springboot.hotelmanagement.repository.CustomerRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,12 +14,11 @@ import java.util.Optional;
 @Repository
 public class CustomerServiceImpl implements CustomerService{
 
+    @Autowired
     private CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerServiceImpl(CustomerRepository theCustomerRepository){
-        customerRepository=theCustomerRepository;
-    }
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional
@@ -55,5 +56,11 @@ public class CustomerServiceImpl implements CustomerService{
     @Transactional
     public List<Customer> findCustomers(int theId) {
         return customerRepository.findCustomers(theId);
+    }
+
+    private CustomerDto convertEntityToDto(Customer customer){
+        CustomerDto customerDto=new CustomerDto();
+        customerDto=modelMapper.map(customer, CustomerDto.class);
+        return customerDto;
     }
 }

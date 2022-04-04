@@ -1,6 +1,7 @@
 package com.springboot.hotelmanagement.enitity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="room")
@@ -11,9 +12,11 @@ public class Room {
     @Column(name="room_id")
     private Integer roomId;
 
+    @NotNull(message = "LastName should not be null")
     @Column(name="room_no")
     private Integer roomNo;
 
+    @NotNull(message = "LastName should not be null")
     @Column(name="floor_no")
     private Integer floorNo;
 

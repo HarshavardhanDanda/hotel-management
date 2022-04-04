@@ -1,14 +1,20 @@
 package com.springboot.hotelmanagement.controller;
 
+
 import com.springboot.hotelmanagement.enitity.Customer;
 import com.springboot.hotelmanagement.enitity.Hotel;
 import com.springboot.hotelmanagement.service.CustomerService;
 import com.springboot.hotelmanagement.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -16,15 +22,17 @@ import java.util.List;
 @RequestMapping("/customers")
 public class CustomerController {
 
+    @Autowired
     private CustomerService customerService;
 
     @Autowired
     private HotelService hotelService;
 
 
-    @Autowired
-    public CustomerController(CustomerService theCustomerService){
-        customerService=theCustomerService;
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder){
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
     @GetMapping("/showAll")//not needed
@@ -44,11 +52,15 @@ public class CustomerController {
     }
 
     @PostMapping("/save/{Id}")
-    public String saveCustomer(@ModelAttribute("customer") Customer theCustomer,@PathVariable("Id") int theId){
-        Hotel theHotel= hotelService.findById(theId);
-        theCustomer.setHotel(theHotel);
-        customerService.save(theCustomer);
-        return "redirect:/customers/findCustomers?hotelId="+theId;
+    public String saveCustomer(@Valid @ModelAttribute("customer") Customer theCustomer, BindingResult result, @PathVariable("Id") int theId){
+        if(result.hasErrors()) {
+            return "customers/customer-form";
+        }else {
+            Hotel theHotel = hotelService.findById(theId);
+            theCustomer.setHotel(theHotel);
+            customerService.save(theCustomer);
+            return "redirect:/customers/findCustomers?hotelId=" + theId;
+        }
     }
 
     @GetMapping("/showFormForUpdate")

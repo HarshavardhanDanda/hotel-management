@@ -7,9 +7,11 @@ import com.springboot.hotelmanagement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -42,11 +44,15 @@ public class RoomController {
     }
 
     @PostMapping("/save/{Id}")
-    public String saveRoom(@ModelAttribute("room") Room theRoom,@PathVariable int Id){
-        Hotel theHotel= hotelService.findById(Id);
-        theRoom.setHotel(theHotel);
-        roomService.save(theRoom);
-        return "redirect:/rooms/findRooms?hotelId="+Id;
+    public String saveRoom(@Valid @ModelAttribute("room") Room theRoom, BindingResult result, @PathVariable int Id){
+        if(result.hasErrors()){
+            return "rooms/room-form";
+        }else {
+            Hotel theHotel = hotelService.findById(Id);
+            theRoom.setHotel(theHotel);
+            roomService.save(theRoom);
+            return "redirect:/rooms/findRooms?hotelId=" + Id;
+        }
     }
 
     @GetMapping("/showFormForUpdate")
