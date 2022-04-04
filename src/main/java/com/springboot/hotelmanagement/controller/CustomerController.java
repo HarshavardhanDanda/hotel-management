@@ -61,9 +61,9 @@ public class CustomerController {
     }
 
     @GetMapping("/deleteById")
-    public String deleteCustomer(@RequestParam("customerId") int customerId){
+    public String deleteCustomer(@RequestParam("customerId") int customerId,@RequestParam("hotelId") int theId){
         customerService.deleteById(customerId);
-        return "redirect:/hotels/showAll";
+        return "redirect:/customers/findCustomers?hotelId="+theId;
     }
 
     @GetMapping("/findCustomers")

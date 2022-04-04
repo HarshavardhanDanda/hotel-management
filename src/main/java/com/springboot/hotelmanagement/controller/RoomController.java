@@ -58,9 +58,9 @@ public class RoomController {
     }
 
     @GetMapping("/deleteById")
-    public String deleteRoom(@RequestParam("roomId") int theId){
+    public String deleteRoom(@RequestParam("roomId") int theId,@RequestParam("hotelId") int Id){
         roomService.deleteById(theId);
-        return "redirect:/rooms/showAll";
+        return "redirect:/rooms/findRooms?hotelId="+Id;
     }
 
     @GetMapping("/findRooms")
