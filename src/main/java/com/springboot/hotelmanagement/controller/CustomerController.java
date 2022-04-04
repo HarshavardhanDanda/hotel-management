@@ -3,6 +3,7 @@ package com.springboot.hotelmanagement.controller;
 import com.springboot.hotelmanagement.enitity.Customer;
 import com.springboot.hotelmanagement.enitity.Hotel;
 import com.springboot.hotelmanagement.service.CustomerService;
+import com.springboot.hotelmanagement.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,10 @@ public class CustomerController {
     private CustomerService customerService;
 
     @Autowired
+    private HotelService hotelService;
+
+
+    @Autowired
     public CustomerController(CustomerService theCustomerService){
         customerService=theCustomerService;
     }
@@ -30,17 +35,20 @@ public class CustomerController {
         return "customers/showCustomers";
     }
 
-    @GetMapping("/showFormForAdd")
-    public String addCustomer(Model theModel){
+    @GetMapping("/showFormForAdd/{Id}")
+    public String addCustomer(Model theModel,@PathVariable("Id") int theId){
         Customer theCustomer= new Customer();
         theModel.addAttribute("customer", theCustomer);
+        theModel.addAttribute("hotelId",theId);
         return "customers/customer-form";
     }
 
-    @PostMapping("/save")
-    public String saveCustomer(@ModelAttribute("customer") Customer theCustomer){
+    @PostMapping("/save/{Id}")
+    public String saveCustomer(@ModelAttribute("customer") Customer theCustomer,@PathVariable("Id") int theId){
+        Hotel theHotel= hotelService.findById(theId);
+        theCustomer.setHotel(theHotel);
         customerService.save(theCustomer);
-        return "redirect:/customers/showAll";
+        return "redirect:/hotels/showAll";
     }
 
     @GetMapping("/showFormForUpdate")
@@ -60,6 +68,7 @@ public class CustomerController {
     public String findCustomers(@RequestParam("hotelId") int theId, Model theModel){
         List<Customer> customers= customerService.findCustomers(theId);
         theModel.addAttribute("hotelCustomers",customers);
+        theModel.addAttribute("hotelId",theId);
         return "customers/showCustomers";
     }
 

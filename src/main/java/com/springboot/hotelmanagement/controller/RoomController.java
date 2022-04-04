@@ -1,6 +1,8 @@
 package com.springboot.hotelmanagement.controller;
 
+import com.springboot.hotelmanagement.enitity.Hotel;
 import com.springboot.hotelmanagement.enitity.Room;
+import com.springboot.hotelmanagement.service.HotelService;
 import com.springboot.hotelmanagement.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,9 @@ public class RoomController {
     private RoomService roomService;
 
     @Autowired
+    public HotelService hotelService;
+
+    @Autowired
     public RoomController(RoomService theRoomService){
         roomService=theRoomService;
     }
@@ -28,17 +33,20 @@ public class RoomController {
         return "rooms/showRooms";
     }
 
-    @GetMapping("/showFormForAdd")
-    public String showFormForAdd(Model theModel){
+    @GetMapping("/showFormForAdd/{Id}")
+    public String showFormForAdd(Model theModel,@PathVariable int Id){
         Room theRoom= new Room();
         theModel.addAttribute("room",theRoom);
+        theModel.addAttribute("hotelId",Id);
         return "rooms/room-form";
     }
 
-    @PostMapping("/save")
-    public String saveRoom(@ModelAttribute("room") Room theRoom){
+    @PostMapping("/save/{Id}")
+    public String saveRoom(@ModelAttribute("room") Room theRoom,@PathVariable int Id){
+        Hotel theHotel= hotelService.findById(Id);
+        theRoom.setHotel(theHotel);
         roomService.save(theRoom);
-        return "redirect:/rooms/showAll";
+        return "redirect:/hotels/showAll";
     }
 
     @GetMapping("/showFormForUpdate")
@@ -58,6 +66,7 @@ public class RoomController {
     public String findRooms(@RequestParam("hotelId") int theId, Model theModel){
         List<Room> Rooms=roomService.findRooms(theId);
         theModel.addAttribute("hotelRooms",Rooms);
+        theModel.addAttribute("hotelId",theId);
         return "rooms/showRooms";
     }
 
