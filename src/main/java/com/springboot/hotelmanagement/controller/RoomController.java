@@ -46,13 +46,14 @@ public class RoomController {
         Hotel theHotel= hotelService.findById(Id);
         theRoom.setHotel(theHotel);
         roomService.save(theRoom);
-        return "redirect:/hotels/showAll";
+        return "redirect:/rooms/findRooms?hotelId="+Id;
     }
 
     @GetMapping("/showFormForUpdate")
-    public String updateRoom(@RequestParam("roomId") int theId, Model theModel){
+    public String updateRoom(@RequestParam("roomId") int theId,@RequestParam("hotelId") int Id ,Model theModel){
         Room theRoom = roomService.findById(theId);
         theModel.addAttribute(theRoom);
+        theModel.addAttribute("hotelId", Id);
         return "rooms/room-form";
     }
 

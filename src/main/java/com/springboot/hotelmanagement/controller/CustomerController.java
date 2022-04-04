@@ -48,13 +48,15 @@ public class CustomerController {
         Hotel theHotel= hotelService.findById(theId);
         theCustomer.setHotel(theHotel);
         customerService.save(theCustomer);
-        return "redirect:/hotels/showAll";
+        return "redirect:/customers/findCustomers?hotelId="+theId;
     }
 
     @GetMapping("/showFormForUpdate")
-    public String updateCustomer(@RequestParam("customerId") int theId, Model theModel){
+    public String updateCustomer(@RequestParam("customerId") int theId,@RequestParam("hotelId") int hotelId, Model theModel){
+        System.out.println(hotelId+" "+theId);
         Customer theCustomer= customerService.findById(theId);
         theModel.addAttribute(theCustomer);
+        theModel.addAttribute("hotelId",hotelId);
         return "customers/customer-form";
     }
 

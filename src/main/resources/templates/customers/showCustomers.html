@@ -30,7 +30,7 @@
                  <td th:text="${theCustomer.firstName}"/>
                  <td th:text="${theCustomer.lastName}"/>
                  <td th:text="${theCustomer.email}"/>
-                 <td style="text-align:center"><a th:href="@{/customers/showFormForUpdate(customerId=${theCustomer.customerId})}" class="btn btn-info btn-sm"> Update</a>&nbsp;
+                 <td style="text-align:center"><a th:href="@{/customers/showFormForUpdate(customerId=${theCustomer.customerId},hotelId=${hotelId})}" class="btn btn-info btn-sm"> Update</a>&nbsp;
                  <a th:href="@{/customers/deleteById(customerId=${theCustomer.customerId})}" class="btn btn-danger btn-sm"
                  onclick="if(!(confirm('Are you sure you wanna delete the customer?'))) return false">Delete</a>
                  </td>
