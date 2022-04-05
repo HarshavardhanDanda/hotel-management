@@ -1,8 +1,6 @@
 package com.springboot.hotelmanagement.service;
 
-import com.springboot.hotelmanagement.dto.CustomerDto;
 import com.springboot.hotelmanagement.dto.HotelDto;
-import com.springboot.hotelmanagement.enitity.Customer;
 import com.springboot.hotelmanagement.enitity.Hotel;
 import com.springboot.hotelmanagement.repository.HotelRepository;
 import org.modelmapper.ModelMapper;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public class HotelServiceImpl implements HotelService{
@@ -54,9 +53,17 @@ public class HotelServiceImpl implements HotelService{
         hotelRepository.deleteById(theId);
     }
 
+    public List<HotelDto> getAllHotels(){
+        return hotelRepository.findAll()
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
     private HotelDto convertEntityToDto(Hotel hotel){
         HotelDto hotelDto=new HotelDto();
         hotelDto=modelMapper.map(hotel, HotelDto.class);
         return hotelDto;
     }
+
 }

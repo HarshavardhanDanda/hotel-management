@@ -1,6 +1,7 @@
 package com.springboot.hotelmanagement.controller;
 
 
+import com.springboot.hotelmanagement.dto.HotelDto;
 import com.springboot.hotelmanagement.enitity.Customer;
 import com.springboot.hotelmanagement.enitity.Hotel;
 import com.springboot.hotelmanagement.service.CustomerService;
@@ -27,6 +28,8 @@ public class CustomerController {
     @Autowired
     private HotelService hotelService;
 
+    String customerForm="customers/customer-form";
+
 
     @InitBinder
     public void initBinder(WebDataBinder dataBinder){
@@ -34,11 +37,14 @@ public class CustomerController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
+
+
     @GetMapping("/showAll")//not needed
     public String findAll(Model theModel){
         List<Customer> Customers= customerService.findAll();
 
         theModel.addAttribute("customers", Customers);
+
         return "customers/showCustomers";
     }
 
@@ -47,14 +53,14 @@ public class CustomerController {
         Customer theCustomer= new Customer();
         theModel.addAttribute("customer", theCustomer);
         theModel.addAttribute("hotelId",theId);
-        return "customers/customer-form";
+        return customerForm;
     }
 
     @PostMapping("/save/{Id}")
     public String saveCustomer(@Valid @ModelAttribute("customer") Customer theCustomer, BindingResult result, @PathVariable("Id") int theId){
 
         if(result.hasErrors()) {
-            return "customers/customer-form";
+            return customerForm;
         }else {
             Hotel theHotel = hotelService.findById(theId);
             theCustomer.setHotel(theHotel);
@@ -68,7 +74,7 @@ public class CustomerController {
         Customer theCustomer= customerService.findById(theId);
         theModel.addAttribute(theCustomer);
         theModel.addAttribute("hotelId",hotelId);
-        return "customers/customer-form";
+        return customerForm;
     }
 
     @GetMapping("/deleteById")

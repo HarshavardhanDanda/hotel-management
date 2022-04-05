@@ -18,15 +18,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/rooms")
 public class RoomController {
+
+    @Autowired
     private RoomService roomService;
 
     @Autowired
     public HotelService hotelService;
 
-    @Autowired
-    public RoomController(RoomService theRoomService){
-        roomService=theRoomService;
-    }
+    String roomForm= "rooms/room-form";
+
 
     @GetMapping("showAll")
     public String findAll(Model theModel){
@@ -40,13 +40,13 @@ public class RoomController {
         Room theRoom= new Room();
         theModel.addAttribute("room",theRoom);
         theModel.addAttribute("hotelId",Id);
-        return "rooms/room-form";
+        return roomForm;
     }
 
     @PostMapping("/save/{Id}")
     public String saveRoom(@Valid @ModelAttribute("room") Room theRoom, BindingResult result, @PathVariable int Id){
         if(result.hasErrors()){
-            return "rooms/room-form";
+            return roomForm;
         }else {
             Hotel theHotel = hotelService.findById(Id);
             theRoom.setHotel(theHotel);
@@ -60,7 +60,7 @@ public class RoomController {
         Room theRoom = roomService.findById(theId);
         theModel.addAttribute(theRoom);
         theModel.addAttribute("hotelId", Id);
-        return "rooms/room-form";
+        return roomForm;
     }
 
     @GetMapping("/deleteById")
