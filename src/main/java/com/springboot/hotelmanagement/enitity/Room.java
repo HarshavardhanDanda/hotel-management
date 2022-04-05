@@ -12,11 +12,11 @@ public class Room {
     @Column(name="room_id")
     private Integer roomId;
 
-    @NotNull(message = "LastName should not be null")
+    @NotNull(message = "Room No should not be null")
     @Column(name="room_no")
     private Integer roomNo;
 
-    @NotNull(message = "LastName should not be null")
+    @NotNull(message = "floor No should not be null")
     @Column(name="floor_no")
     private Integer floorNo;
 

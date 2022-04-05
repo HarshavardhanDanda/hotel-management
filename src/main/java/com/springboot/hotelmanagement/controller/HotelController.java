@@ -5,9 +5,11 @@ import com.springboot.hotelmanagement.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -39,10 +41,13 @@ public class HotelController {
     }
 
     @PostMapping("/save")
-    public String saveHotel(@ModelAttribute("hotel") Hotel theHotel) {
+    public String saveHotel(@Valid @ModelAttribute("hotel") Hotel theHotel, BindingResult result) {
+        if(result.hasErrors()){
+            return "hotels/hotel-form";
+        }else{
         hotelService.save(theHotel);
         return "redirect:/hotels/showAll";
-    }
+    }}
 
     @GetMapping("/showFormForUpdate")
     public String updateHotel(@RequestParam("hotelId") int theId, Model theModel) {

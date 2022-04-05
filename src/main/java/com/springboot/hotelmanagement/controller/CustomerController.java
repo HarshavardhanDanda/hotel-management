@@ -10,7 +10,6 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,6 +52,7 @@ public class CustomerController {
 
     @PostMapping("/save/{Id}")
     public String saveCustomer(@Valid @ModelAttribute("customer") Customer theCustomer, BindingResult result, @PathVariable("Id") int theId){
+
         if(result.hasErrors()) {
             return "customers/customer-form";
         }else {
@@ -65,7 +65,6 @@ public class CustomerController {
 
     @GetMapping("/showFormForUpdate")
     public String updateCustomer(@RequestParam("customerId") int theId,@RequestParam("hotelId") int hotelId, Model theModel){
-        System.out.println(hotelId+" "+theId);
         Customer theCustomer= customerService.findById(theId);
         theModel.addAttribute(theCustomer);
         theModel.addAttribute("hotelId",hotelId);
