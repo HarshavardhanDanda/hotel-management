@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class HotelDto {
-    private int hotelId;
 
     private String hotelName;
 
