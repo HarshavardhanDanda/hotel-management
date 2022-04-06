@@ -22,12 +22,17 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/hotels/showAll","/rooms/findRooms").hasRole("VIEWER")//ACCESS TO SOME PEOPLE
-                .antMatchers("/customers/**","/rooms/**","/hotels/**").hasRole("MANAGER")
+
+
+                .antMatchers("/hotels/showAll","/rooms/findRooms").hasAnyRole("VIEWER","MANAGER")
+                .antMatchers("/hotels/**","/customers/**","/rooms/**").hasRole("MANAGER")
+                .antMatchers("/").permitAll()
+                //ACCESS TO SOME PEOPLE
                 .and()
                 .formLogin()
                 //.loginPage("/login")//this displays before home page
                 //.loginProcessingUrl("/home")
+                .defaultSuccessUrl("/", true)
                 .permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
@@ -44,7 +49,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
         User.UserBuilder users = User.withDefaultPasswordEncoder();
 
         auth.inMemoryAuthentication()
-                .withUser(users.username("harsha").password("harsha076").roles("MANAGER", "VIEWER"))
+                .withUser(users.username("harsha").password("harsha076").roles("MANAGER"))
                 .withUser(users.username("customer").password("customer123").roles("VIEWER"));
 
 

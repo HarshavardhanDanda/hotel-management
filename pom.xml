@@ -36,6 +36,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!--Dependency added for extra spring security(role based authorization)-->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>com.mchange</groupId>
 			<artifactId>c3p0</artifactId>
@@ -45,8 +51,9 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-			<version>2.6.6</version>
 		</dependency>
+
+
 
 		<!--for validation purposes-->
 		<dependency>

@@ -1,8 +1,5 @@
 package com.springboot.hotelmanagement.enitity;
 
-
-import lombok.Data;
-
 import javax.validation.constraints.*;
 
 import javax.persistence.*;

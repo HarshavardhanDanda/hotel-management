@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -12,32 +12,50 @@
 </head>
 <body style="background-color: #e3e0cf">
 <div class="container">
-<hr>
-<h3>Hotel List</h3>
-<hr>
-<a th:href="@{/hotels/showFormForAdd}" class="btn btn-primary btn-sm mb-3">Add Hotel </a>
-<hr>
+    <br>
+    <hr>
+    <span sec:authorize="hasRole('VIEWER')">
+        <h1>Welcome Customer</h1></span>
+
+    <span sec:authorize="hasRole('MANAGER')">
+        <h1>Welcome Manager</h1></span>
+
+    <hr>
+    <h3>Hotel List</h3>
+    <hr>
+
+    <div sec:authorize="hasRole('MANAGER')">
+        <a th:href="@{/hotels/showFormForAdd}"
+           class="btn btn-primary btn-sm mb-3">
+            Add Hotel
+        </a>
+    </div>
+
+
     <table class="table table-bordered table-striped"  >
         <thead class="thead-dark">
-            <th>Hotel Name</th>
-            <th>Hotel Address</th>
-            <th>Rating</th>
-            <th style="text-align:center">View Details</th>
-            <th style="text-align:center">Action</th>
+        <th>Hotel Name</th>
+        <th>Hotel Address</th>
+        <th>Rating</th>
+        <th style="text-align:center">View Details</th>
+        <span sec:authorize="hasRole('MANAGER')">
+            <th style="text-align:center">Action</th></span>
         </thead>
         <tbody style="background-color:pink">
-            <tr th:each="theHotel: ${hotels}">
-                <td th:text="${theHotel.hotelName}"/>
-                <td th:text="${theHotel.hotelAddress}"/>
-                <td th:text="${theHotel.hotelRating}"/>
-                <td style="text-align:center"><a th:href="@{/rooms/findRooms(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm">View Rooms</a>&nbsp;&nbsp;&nbsp;
-                    <a th:href="@{/customers/findCustomers(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm">View Customers</a>
-                </td>
-                <td style="text-align:center"> <a th:href="@{/hotels/showFormForUpdate(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm"> Update</a>&nbsp;
-                   <a th:href="@{/hotels/deleteById(hotelId=${theHotel.hotelId})}" class="btn btn-danger btn-sm"
-                      onclick="if(!(confirm('Are you sure you wanna delete the hotel?'))) return false">Delete</a>
-                </td>
-            </tr>
+        <tr th:each="theHotel: ${hotels}">
+            <td th:text="${theHotel.hotelName}"/>
+            <td th:text="${theHotel.hotelAddress}"/>
+            <td th:text="${theHotel.hotelRating}"/>
+            <td style="text-align:center"><a th:href="@{/rooms/findRooms(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm">View Rooms</a>&nbsp;&nbsp;&nbsp;
+                <span sec:authorize="hasRole('MANAGER')">
+                    <a th:href="@{/customers/findCustomers(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm">View Customers</a></span>
+            </td>
+            <span sec:authorize="hasRole('MANAGER')">
+            <td style="text-align:center"> <a th:href="@{/hotels/showFormForUpdate(hotelId=${theHotel.hotelId})}" class="btn btn-info btn-sm"> Update</a>&nbsp;
+                <a th:href="@{/hotels/deleteById(hotelId=${theHotel.hotelId})}" class="btn btn-danger btn-sm"
+                   onclick="if(!(confirm('Are you sure you wanna delete the hotel?'))) return false">Delete</a>
+            </td></span>
+        </tr>
         </tbody>
 
     </table>
