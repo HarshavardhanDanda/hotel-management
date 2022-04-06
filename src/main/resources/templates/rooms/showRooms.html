@@ -15,23 +15,28 @@
     <hr>
     <h3>Rooms List</h3>
 <hr>
+    <span sec:authorize="hasRole('MANAGER')">
 <a th:href="@{/rooms/showFormForAdd/{Id}(Id=${hotelId})}" class="btn btn-primary btn-sm mb-3"> Add Room </a>
-<hr>
+        <hr>
+    </span>
+
 <table class="table table-bordered table-striped" >
     <thead class="thead-dark">
        <th>Room No </th>
        <th> Floor No </th>
-    <th style="text-align:center">Action</th>
+       <span sec:authorize="hasRole('MANAGER')">
+           <th style="text-align:center">Action</th></span>
     </thead>
     <tbody style="background-color: pink">
        <tr th:each="theRoom: ${hotelRooms}">
            <td th:text="${theRoom.roomNo}"/>
            <td th:text="${theRoom.floorNo}"/>
+           <span sec:authorize="hasRole('MANAGER')">
            <td style="text-align:center">
                <a th:href="@{/rooms/showFormForUpdate(roomId=${theRoom.roomId},hotelId=${hotelId})}" class="btn btn-info btn-sm">Update</a>&nbsp;
                <a th:href="@{/rooms/deleteById(roomId=${theRoom.roomId},hotelId=${hotelId})}" class="btn btn-danger btn-sm"
                onclick="if(!(confirm('Are you sure you wanna delete this room?'))) return false">Delete</a>
-           </td>
+           </td></span>
        </tr>
     </tbody>
 </table>
