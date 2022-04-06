@@ -1,10 +1,11 @@
 package com.springboot.hotelmanagement.dto;
 
-import com.springboot.hotelmanagement.enitity.Hotel;
 import lombok.Data;
 
 @Data
 public class HotelDto {
+
+    private String hotelId;
 
     private String hotelName;
 

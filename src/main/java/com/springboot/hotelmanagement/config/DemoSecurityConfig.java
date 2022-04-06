@@ -19,13 +19,14 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource securityDataSource;
 
+    String manager="MANAGER";
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
 
 
-                .antMatchers("/hotels/showAll","/rooms/findRooms").hasAnyRole("VIEWER","MANAGER")
-                .antMatchers("/hotels/**","/customers/**","/rooms/**").hasRole("MANAGER")
+                .antMatchers("/hotels/showAll","/rooms/findRooms").hasAnyRole("VIEWER",manager)
+                .antMatchers("/hotels/**","/customers/**","/rooms/**").hasRole(manager)
                 .antMatchers("/").permitAll()
                 //ACCESS TO SOME PEOPLE
                 .and()
@@ -49,7 +50,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter {
         User.UserBuilder users = User.withDefaultPasswordEncoder();
 
         auth.inMemoryAuthentication()
-                .withUser(users.username("harsha").password("harsha076").roles("MANAGER"))
+                .withUser(users.username("harsha").password("harsha076").roles(manager))
                 .withUser(users.username("customer").password("customer123").roles("VIEWER"));
 
 
