@@ -1,7 +1,5 @@
 package com.springboot.hotelmanagement.controller;
 
-
-import com.springboot.hotelmanagement.dto.HotelDto;
 import com.springboot.hotelmanagement.enitity.Customer;
 import com.springboot.hotelmanagement.enitity.Hotel;
 import com.springboot.hotelmanagement.service.CustomerService;
@@ -41,9 +39,9 @@ public class CustomerController {
 
     @GetMapping("/showAll")//not needed
     public String findAll(Model theModel){
-        List<Customer> Customers= customerService.findAll();
+        List<Customer> customers= customerService.findAll();
 
-        theModel.addAttribute("customers", Customers);
+        theModel.addAttribute("customers", customers);
 
         return "customers/showCustomers";
     }

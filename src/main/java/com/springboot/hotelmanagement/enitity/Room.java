@@ -26,7 +26,8 @@ public class Room {
 
     public Room(){}
 
-    public Room(Integer floorNo) {
+    public Room(Integer roomNo, Integer floorNo) {
+        this.roomNo = roomNo;
         this.floorNo = floorNo;
     }
 
